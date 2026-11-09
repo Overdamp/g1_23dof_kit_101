@@ -24,7 +24,14 @@ make doctor     # ต้องได้ 0 FAIL
 make smoke      # เทรน 3 iteration + sim2sim แบบไม่มีหน้าจอ ต้องได้ PASS ทั้งสองข้อ
 make sim2sim POLICY=v0   # เปิด sim + g1_ctrl ใน tmux แล้วเดินด้วยคีย์บอร์ด
 ```
-มี repo อยู่แล้วที่อื่น: ใส่ `WS=<โฟลเดอร์>` ต่อท้ายทุกคำสั่ง เช่น `make doctor WS=~/nvidia/unitree`
+มี repo อยู่แล้วที่อื่น (ไม่ใช้ `make clone`): บอก kit ครั้งเดียวด้วย `make set-ws WS=~/nvidia/unitree` ค่าจะถูกเก็บใน `local.mk` (ไม่เข้า git) หลังจากนั้นพิมพ์ `make <target>` ได้เลย
+ไม่ต้อง `conda activate` เอง ทุก target เปิด env ที่ถูกต้องให้
+
+อยากสั่งจากโฟลเดอร์ไหนก็ได้ (ไม่บังคับ): เพิ่มใน `~/.bashrc`
+```bash
+alias g1k='make -C ~/nvidia/unitree/g1_23dof_kit'   # แก้ path ให้ตรงกับที่โคลนไว้
+```
+แล้วใช้ `g1k doctor`, `g1k sim2sim POLICY=v0` ได้ทุกที่ (`make` ปกติอ่าน `Makefile` ในโฟลเดอร์ที่ยืนอยู่เท่านั้น)
 
 ถ้าขั้นไหนไม่ผ่าน ดู [docs/pitfalls.md](docs/pitfalls.md) ก่อน
 
@@ -49,6 +56,7 @@ g1_23dof_kit/
 | [docs/03-reference](docs/03-reference) | หาค่า, flag, ตาราง |
 | [docs/04-explanation](docs/04-explanation) | อยากรู้ว่าทำไมออกแบบแบบนี้ |
 | [docs/pitfalls.md](docs/pitfalls.md) | เจอ error |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | แผนพัฒนา kit + checklist |
 
 ## กติกาของ repo
 - ห้ามใส่รหัสผ่านหรือ token ในไฟล์ใดๆ ใช้ `.env` (อยู่ใน `.gitignore`)
