@@ -53,10 +53,10 @@
 **เสร็จเมื่อ:** `git status` สะอาด และ `make doctor` ยังได้ 0 FAIL
 
 ### Phase 1: ทำให้ make โปร่งใส (1 วัน)
-- [ ] คอมเมนต์หัวไฟล์ `Makefile`: ไฟล์นี้เป็นแค่ทางลัด ของจริงอยู่ใน `scripts/` และ `unitree_rl_mjlab/` ดูตารางได้ที่ `docs/03-reference/make_targets.md`
-- [ ] `docs/03-reference/make_targets.md`: ตาราง target → คำสั่งจริง → ไฟล์ต้นทาง ครบทุก target
-- [ ] สคริปต์ตรวจว่าทุก target ใน `Makefile` มีอยู่ในตาราง (ใส่ไว้ใน `make smoke` หรือ CI)
-- [ ] ตรวจว่าไม่มี target ไหนยาวเกิน 3 บรรทัด ถ้ายาวกว่านั้นให้ย้ายไปเป็นสคริปต์
+- [x] คอมเมนต์หัวไฟล์ `Makefile`: ไฟล์นี้เป็นแค่ทางลัด ของจริงอยู่ใน `scripts/` และ `unitree_rl_mjlab/` ดูตารางได้ที่ `docs/03-reference/make_targets.md` (9/11/2026, Overdamp)
+- [x] `docs/03-reference/make_targets.md`: ตาราง target → คำสั่งจริง → ไฟล์ต้นทาง ครบทุก target (9/11/2026, Overdamp)
+- [x] สคริปต์ตรวจว่าทุก target ใน `Makefile` มีอยู่ในตาราง (ใส่ไว้ใน `make smoke` หรือ CI) (9/11/2026, Overdamp) → `make check` (`tests/check_kit.sh`) และ `make smoke` เรียก `check` ก่อน
+- [x] ตรวจว่าไม่มี target ไหนยาวเกิน 3 บรรทัด ถ้ายาวกว่านั้นให้ย้ายไปเป็นสคริปต์ (9/11/2026, Overdamp) → `deploy-real` เคยมี 6 คำสั่ง ย้ายด่านตรวจไปไว้ใน `scripts/real_robot_guard.sh` แล้ว · `make check` ตรวจกฎนี้ (ไม่นับ `$(need_ws)` และบรรทัดต่อ)
 
 **เสร็จเมื่อ:** เปิด `make_targets.md` หน้าเดียวก็ตอบได้ว่าแต่ละคำสั่งรันอะไร
 

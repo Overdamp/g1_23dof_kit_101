@@ -53,7 +53,7 @@ g1_23dof_kit/
 |---|---|
 | [docs/01-tutorials](docs/01-tutorials) | มาใหม่ ทำตามทีละขั้นตามลำดับวัน |
 | [docs/02-how-to](docs/02-how-to) | รู้ว่าจะทำอะไร ต้องการขั้นตอน (runbook) |
-| [docs/03-reference](docs/03-reference) | หาค่า, flag, ตาราง |
+| [docs/03-reference](docs/03-reference) | หาค่า, flag, ตาราง · [make_targets.md](docs/03-reference/make_targets.md) = แต่ละ `make` รันอะไรจริง |
 | [docs/04-explanation](docs/04-explanation) | อยากรู้ว่าทำไมออกแบบแบบนี้ |
 | [docs/pitfalls.md](docs/pitfalls.md) | เจอ error |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | แผนพัฒนา kit + checklist |

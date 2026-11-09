@@ -1,5 +1,15 @@
 # g1_23dof_kit: one entry point for the G1 23-DoF locomotion project.
 #
+# THIS FILE IS ONLY SHORTCUTS. Each target runs 1-3 commands that call a real
+# script or program; the work itself is in:
+#   scripts/, tests/                 (this kit)
+#   <WS>/unitree_rl_mjlab/scripts/   (train.py, play.py, list_envs.py)
+#   <WS>/unitree_rl_mjlab/deploy/robots/g1_23dof/scripts/   (sim2sim, deploy, monitors)
+# Every script also runs without make. To see what a target would run:
+#   make -n <target>
+# Table of target -> command -> file: docs/03-reference/make_targets.md
+# (make check fails if a target is missing there or grows past 3 commands).
+#
 #   make            list the targets
 #   make doctor     check this machine (run it first, and whenever something is odd)
 #
@@ -7,7 +17,7 @@
 # and typing "real" at the prompt. Real-robot tests only as a group (lab rule).
 #
 # WS is where the repos live. Default: ./repos inside the kit (what `make clone`
-# fills). Point it at an existing tree instead, e.g. `make doctor WS=~/nvidia/unitree`.
+# fills). Repos somewhere else: `make set-ws WS=~/nvidia/unitree` once per machine.
 
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
@@ -28,10 +38,13 @@ CONDA_SH ?= $(HOME)/miniconda3/etc/profile.d/conda.sh
 RL_ENV   ?= unitree_rl_mjlab
 SDK_ENV  ?= g1_sdk
 
-# Run inside a conda env. PYTHONPATH=$(RL) makes `import src` load THIS checkout:
-# the env has one checkout pip-installed (editable) and would otherwise load that
-# one, even from a git worktree.
-# Stop early with a clear message when WS has no unitree_rl_mjlab.
+# Helpers used in the recipes below (spelled out in make_targets.md):
+#   need_ws  stop with a clear message when WS has no unitree_rl_mjlab
+#   in_rl    conda activate unitree_rl_mjlab; cd WS/unitree_rl_mjlab; PYTHONPATH=there
+#            (the env has one checkout pip-installed (editable); without PYTHONPATH,
+#            `import src` would load that one, even from a git worktree)
+#   in_sdk   conda activate g1_sdk; cd WS/unitree_rl_mjlab; unset CYCLONEDDS_URI
+#            (a leftover CYCLONEDDS_URI from a ROS terminal overrides --network)
 need_ws = @test -d $(RL) || { echo "No repos at WS=$(WS)"; \
   echo "  new machine:    make clone"; \
   echo "  repos elsewhere: make set-ws WS=<folder that has unitree_rl_mjlab>"; exit 1; }
@@ -98,13 +111,13 @@ sdk2: ## Build unitree_sdk2; prints the sudo install step for you to run
 build: build-sim build-ctrl ## Build unitree_mujoco (sim) and g1_ctrl (controller)
 
 .PHONY: build-sim
-build-sim:
+build-sim: ## Build unitree_mujoco only
 	$(need_ws)
 	cmake -S $(SIM_DIR) -B $(SIM_DIR)/build -DCMAKE_BUILD_TYPE=Release
 	cmake --build $(SIM_DIR)/build -j$$(nproc)
 
 .PHONY: build-ctrl
-build-ctrl:
+build-ctrl: ## Build g1_ctrl only
 	$(need_ws)
 	cmake -S $(ROBOT) -B $(ROBOT)/build -DCMAKE_BUILD_TYPE=Release
 	cmake --build $(ROBOT)/build -j$$(nproc)
@@ -175,11 +188,7 @@ deploy-sim: ## Rehearse deploy day in sim: 4 byobu panes on lo
 .PHONY: deploy-real
 deploy-real: ## Deploy day panes: make deploy-real IFACE=enp43s0 [RUN=1 TAG=run]
 	$(need_ws)
-	@test -n "$(IFACE)" && test "$(IFACE)" != lo || { echo "Set IFACE=<robot NIC>, e.g. IFACE=enp43s0"; exit 1; }
-	@! pgrep -x unitree_mujoco >/dev/null || { echo "Close unitree_mujoco first (sim and robot must not mix)."; exit 1; }
-	@ip -4 addr show $(IFACE) | grep -q '192\.168\.123\.' || { echo "$(IFACE) has no 192.168.123.x address."; exit 1; }
-	@echo -e "\e[1;41;37m  REAL ROBOT on $(IFACE), domain 0. Robot hung? Group present? Remote in hand?  \e[0m"
-	@read -r -p 'Type "real" to continue: ' ans && [ "$$ans" = real ] || { echo "Cancelled."; exit 1; }
+	@bash $(KIT)/scripts/real_robot_guard.sh "$(IFACE)"
 	$(in_sdk) IFACE=$(IFACE) bash $(SCRIPTS)/deploy_byobu.sh $(RUN) $(TAG)
 
 .PHONY: health
@@ -191,8 +200,12 @@ health: ## Read-only robot health check: make health IFACE=enp43s0
 # ---------------------------------------------------------------------------
 ##@ Checks, Docker, docs
 
+.PHONY: check
+check: ## Static checks, no GPU: script syntax, Makefile rules, make_targets.md complete
+	@bash $(KIT)/tests/check_kit.sh
+
 .PHONY: smoke
-smoke: ## Fast end-to-end check: 3 training iterations + headless eval
+smoke: check ## Fast end-to-end check: make check + 3 training iterations + headless eval
 	$(need_ws)
 	@WS=$(WS) CONDA_SH=$(CONDA_SH) RL_ENV=$(RL_ENV) SDK_ENV=$(SDK_ENV) bash $(KIT)/tests/smoke.sh
 
