@@ -32,5 +32,7 @@
 |---|---|---|
 | `make: *** No rule to make target` หรือ make ทำอะไรไม่ตรงกับที่คาด | `make` อ่าน `Makefile` ในโฟลเดอร์ที่ยืนอยู่เท่านั้น ถ้าอยู่ใน `build/` จะไปรัน Makefile ของ cmake (compile ใหม่) | `cd` ไปที่โฟลเดอร์ kit หรือใช้ `make -C <โฟลเดอร์ kit> <target>` |
 | `cd: .../g1_23dof_kit/repos/unitree_rl_mjlab: No such file` / "No repos at WS=" | ยังไม่ได้ `make clone` และ repo อยู่ที่อื่น | `make set-ws WS=<โฟลเดอร์ที่มี unitree_rl_mjlab>` (ทำครั้งเดียวต่อเครื่อง) |
+| `g1_ctrl or unitree_mujoco is already running; stop it first.` ตอน `make sim2sim` | tmux session `sim2sim` รอบก่อนยังค้างอยู่ (`Ctrl+b d` แค่ออกจาก tmux โปรแกรมยังรันต่อ) | `make sim2sim-stop` (= `tmux kill-session -t sim2sim`) · `tmux ls` ดูว่ามี session ไหนค้าง |
+| `Session g1deploy already exists, attaching` | session ของ deploy รอบก่อนยังค้างอยู่ | ถ้า g1_ctrl ใน T3 หยุดแล้ว ให้ `tmux kill-session -t g1deploy` (สคริปต์ไม่ปิดให้ เพราะบนหุ่นจริง g1_ctrl อาจกำลังพยุงหุ่น) |
 | หน้าต่าง MuJoCo กระตุก แต่ viser ลื่น | native viewer วาดทุก env บน CPU ใน loop เดียวกับฟิสิกส์ | `VIEWER=viser` หรือ `--num-envs 1` |
 | GPU memory เต็ม (6 GB) | env เยอะเกิน หรือเทรนสองงานพร้อมกัน | ลด `ENVS=` · รันทีละงาน |

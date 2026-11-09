@@ -63,6 +63,8 @@ make -n <target>          # เช่น make -n sim2sim POLICY=v0
 |---|---|---|---|
 | `eval` | วัดการเดินตามคำสั่งความเร็วแบบไม่มีหน้าจอ พิมพ์ผลเป็น JSON | `$(in_sdk) python SCRIPTS/vel_eval.py --policy ROBOT/config/policy/velocity/POLICY/exported/policy.onnx --deploy .../params/deploy.yaml [--cases CASES]` | `SCRIPTS/vel_eval.py` |
 | `sim2sim` | tmux: sim + g1_ctrl + speed monitor | `$(in_sdk) bash SCRIPTS/sim2sim_policy.sh POLICY` | `SCRIPTS/sim2sim_policy.sh` |
+| `sim2sim-stop` | ปิด tmux session `sim2sim` ที่ค้างอยู่ (g1_ctrl + monitor) | `tmux kill-session -t sim2sim` | – |
+| `gain-check` | ตรวจโฟลเดอร์ policy: kp, kd, scale, offset ใน `deploy.yaml` ตรงกับค่าที่ฝังใน `policy.onnx` ไหม และขนาด obs ตรงไหม | `$(in_sdk) python SCRIPTS/gain_check.py ROBOT/config/policy/velocity/POLICY` | `SCRIPTS/gain_check.py` |
 | `sim` | เปิด sim อย่างเดียว | `cd RL/simulate/build && env -u CYCLONEDDS_URI LD_LIBRARY_PATH=/opt/unitree_robotics/lib ./unitree_mujoco -i SIM_DOMAIN` | `RL/simulate/build/unitree_mujoco`, `RL/simulate/config.yaml` |
 | `ctrl-sim` | g1_ctrl คุยกับ sim (คีย์บอร์ดใช้ได้) | `cd ROBOT/build && env -u CYCLONEDDS_URI LD_LIBRARY_PATH=... ./g1_ctrl --network lo --domain SIM_DOMAIN` | `ROBOT/build/g1_ctrl`, `ROBOT/config/config.yaml` |
 | `deploy-sim` | ซ้อมวันทดสอบ: byobu 4 ช่องบน lo | `$(in_sdk) IFACE=lo bash SCRIPTS/deploy_byobu.sh RUN TAG` | `SCRIPTS/deploy_byobu.sh` |
@@ -93,7 +95,7 @@ make -n <target>          # เช่น make -n sim2sim POLICY=v0
 | `ITERS` | (ไม่จำกัด) | `train` |
 | `CKPT` | (ต้องใส่) | `play` |
 | `VIEWER` | `viser` | `play` (`native` = หน้าต่าง MuJoCo) |
-| `POLICY` | `v0` | `eval`, `sim2sim` (ชื่อโฟลเดอร์ใต้ `ROBOT/config/policy/velocity/`) |
+| `POLICY` | `v0` | `eval`, `sim2sim`, `gain-check` (ชื่อโฟลเดอร์ใต้ `ROBOT/config/policy/velocity/`) |
 | `CASES` | (ชุดในสคริปต์) | `eval` เช่น `"0.4,0,0;0,0,0.5"` |
 | `SIM_DOMAIN` | `1` | `sim`, `ctrl-sim` (`0` เฉพาะกรณี g1pilot) |
 | `IFACE` | (ต้องใส่) | `deploy-real`, `health` |

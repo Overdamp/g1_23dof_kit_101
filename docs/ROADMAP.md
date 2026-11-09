@@ -69,20 +69,22 @@
 - [x] DDS, domain, interface (lo กับ enp43s0) และ `CYCLONEDDS_URI` (เมื่อไร set เมื่อไร unset) (9/11/2026, Overdamp)
 - [x] ROS 2 กับ Unitree SDK ต่างกันอย่างไร, Fast DDS กับ Cyclone DDS (9/11/2026, Overdamp)
 - [x] git worktree และเหตุที่ต้องตั้ง `PYTHONPATH` (9/11/2026, Overdamp)
+- [x] tmux กับ byobu: session / window / pane, ปุ่มของสองแบบ, ปิด session ที่ค้าง (9/11/2026, Overdamp) · ⏳ ทดสอบว่าปุ่มเพี้ยนไหมเมื่อเปิดสองแบบปนกัน
 
 **เสร็จเมื่อ:** มือใหม่อ่านจบแล้วตอบคำถามท้ายแต่ละหน้าได้
-(เขียนครบ 7 หน้า 9/11/2026 · คำสั่ง "ลองพิมพ์" ทุกหน้ารันจริงแล้วผลตรง · ⏳ ยังรอมือใหม่ลองอ่านจริง ซึ่งจะทำพร้อม Phase 5)
+(เขียนครบ 8 หน้า 9/11/2026 · คำสั่ง "ลองพิมพ์" ทุกหน้ารันจริงแล้วผลตรง · ⏳ ยังรอมือใหม่ลองอ่านจริง ซึ่งจะทำพร้อม Phase 5)
 
 ### Phase 3: Tutorial ครบ 5 วัน (3–4 วัน)
 ทุกหน้าใช้รูปแบบเดียวกัน: เป้าหมาย → คำสั่งเต็ม → ทางลัด make → ผลที่ต้องเห็น → ถ้าไม่เห็นให้ดูข้อไหน
-- [ ] Day 1 แก้ให้แสดงคำสั่งเต็มก่อนทุกขั้น (ตอนนี้มีแต่ make)
-- [ ] Day 2 เทรน: `make train` → TensorBoard → `make play` (native กับ viser ต่างกันอย่างไร)
-- [ ] Day 3 export + sim2sim: export onnx + deploy.yaml → `make eval` (เกณฑ์ผ่าน) → `make sim2sim`
-- [ ] Day 4 ซ้อมวันทดสอบใน sim: `make deploy-sim` ครบ checklist + การหยุดฉุกเฉิน
-- [ ] Day 5 หุ่นจริง: อ้างอิง checklist วันทดสอบ, ทดสอบเป็นกลุ่ม, หุ่นแขวน, สิทธิ์ของแลป
+- [x] Day 1 แก้ให้แสดงคำสั่งเต็มก่อนทุกขั้น (ตอนนี้มีแต่ make) (9/11/2026, Overdamp)
+- [x] Day 2 เทรน: `make train` → TensorBoard → `make play` (native กับ viser ต่างกันอย่างไร) (9/11/2026, Overdamp)
+- [x] Day 3 export + sim2sim: export onnx + deploy.yaml → `make eval` (เกณฑ์ผ่าน) → `make sim2sim` (9/11/2026, Overdamp)
+- [x] Day 4 ซ้อมวันทดสอบใน sim: `make deploy-sim` ครบ checklist + การหยุดฉุกเฉิน (9/11/2026, Overdamp)
+- [x] Day 5 หุ่นจริง: อ้างอิง checklist วันทดสอบ, ทดสอบเป็นกลุ่ม, หุ่นแขวน, สิทธิ์ของแลป (9/11/2026, Overdamp)
 - [ ] ภาพหน้าจอหรือ GIF ของผลที่ต้องเห็น อย่างน้อยหน้าละ 1 รูป
 
 **เสร็จเมื่อ:** ผู้ดูแลทำตาม Day 1–4 บน user ใหม่ได้โดยไม่ต้องเปิดโน้ตส่วนตัว
+(เขียนครบ 5 วัน 9/11/2026 · เพิ่ม `make gain-check` และ `make sim2sim-stop` · ตรวจข้อความที่โปรแกรมพิมพ์และชื่อกราฟ TensorBoard กับของจริงแล้ว · ⏳ ภาพหน้าจอ และการทดสอบบน user ใหม่รอทำใน Phase 5)
 
 ### Phase 4: ย้ายความรู้จาก vault มาเป็น docs (2–3 วัน)
 ตัดข้อมูลเฉพาะเครื่องออก และเปลี่ยน alias ใน bashrc ให้เป็น `make <target>`

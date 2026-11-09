@@ -51,7 +51,7 @@ g1_23dof_kit/
 ## คู่มือ
 | โฟลเดอร์ | ใช้เมื่อ |
 |---|---|
-| [docs/04-explanation/basics](docs/04-explanation/basics/README.md) | **มือใหม่อ่านก่อน:** terminal, env var, conda, make, DDS, ROS 2, worktree |
+| [docs/04-explanation/basics](docs/04-explanation/basics/README.md) | **มือใหม่อ่านก่อน:** terminal, env var, conda, make, DDS, ROS 2, worktree, tmux |
 | [docs/01-tutorials](docs/01-tutorials) | มาใหม่ ทำตามทีละขั้นตามลำดับวัน |
 | [docs/02-how-to](docs/02-how-to) | รู้ว่าจะทำอะไร ต้องการขั้นตอน (runbook) |
 | [docs/03-reference](docs/03-reference) | หาค่า, flag, ตาราง · [make_targets.md](docs/03-reference/make_targets.md) = แต่ละ `make` รันอะไรจริง |
