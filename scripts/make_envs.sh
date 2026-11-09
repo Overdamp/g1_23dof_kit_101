@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# make envs: create the conda envs from envs/*.yml and install the WS checkouts
+# into them. An env that already exists is left alone (remove it yourself with
+# `conda env remove -n <name>` to rebuild).
+set -euo pipefail
+
+KIT="$(cd "$(dirname "$0")/.." && pwd)"
+WS="${1:-$KIT/repos}"
+CONDA_SH="${CONDA_SH:-$HOME/miniconda3/etc/profile.d/conda.sh}"
+# shellcheck disable=SC1090
+source "$CONDA_SH"
+
+have() { conda env list | awk '{print $1}' | grep -qx "$1"; }
+
+if have unitree_rl_mjlab; then
+  echo "skip  unitree_rl_mjlab (exists)"
+else
+  conda env create -f "$KIT/envs/unitree_rl_mjlab.yml"
+  conda run -n unitree_rl_mjlab pip install -e "$WS/unitree_rl_mjlab"
+fi
+
+if have g1_sdk; then
+  echo "skip  g1_sdk (exists)"
+else
+  conda env create -f "$KIT/envs/g1_sdk.yml"
+  conda run -n g1_sdk pip install -e "$WS/unitree_sdk2_python"
+fi
+
+echo "done. Check with: make doctor"

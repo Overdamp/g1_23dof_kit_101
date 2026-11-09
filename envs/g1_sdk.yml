@@ -1,0 +1,14 @@
+# Robot / sim2sim tools env: the Python scripts in deploy/robots/g1_23dof/scripts
+# (monitors, health, vel_eval). make envs creates it, then pip-installs
+# unitree_sdk2_python from WS (editable).
+name: g1_sdk
+channels: [conda-forge]
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - cyclonedds==0.10.2
+      - numpy==2.2.6
+      - onnxruntime==1.23.2
+      - mujoco==3.14.0
+      - pyyaml

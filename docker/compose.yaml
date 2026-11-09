@@ -1,0 +1,22 @@
+# docker compose -f docker/compose.yaml run --rm dev     (or: make docker-shell)
+# Needs nvidia-container-toolkit on the host. Status: draft, not tested yet.
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: g1_23dof_kit:dev
+    # DDS discovery uses multicast on the host's interfaces (lo for the sim,
+    # enp43s0 for the robot), so the container shares the host network.
+    network_mode: host
+    ipc: host
+    gpus: all
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - ..:/kit
+      - ${WS:-../repos}:/ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    stdin_open: true
+    tty: true
