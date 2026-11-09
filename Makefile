@@ -166,7 +166,7 @@ sim2sim: ## tmux: sim + g1_ctrl + speed monitor: make sim2sim POLICY=v0
 
 .PHONY: sim2sim-stop
 sim2sim-stop: ## Close the sim2sim tmux session (g1_ctrl + monitor) when you are done
-	tmux kill-session -t sim2sim
+	@tmux kill-session -t sim2sim 2>/dev/null && echo "Closed tmux session sim2sim." || echo "No sim2sim session running (nothing to stop)."
 
 .PHONY: gain-check
 gain-check: ## Check a policy folder: deploy.yaml vs the gains inside policy.onnx: make gain-check POLICY=v0

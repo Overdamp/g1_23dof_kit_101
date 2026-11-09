@@ -100,17 +100,29 @@ bash deploy/robots/g1_23dof/scripts/sim2sim_policy.sh v0
 ```
 **ทางลัด:** `make sim2sim POLICY=v0`
 
-จะได้ tmux session ชื่อ `sim2sim` 3 หน้าต่าง: **0** = MuJoCo, **1** = g1_ctrl (พิมพ์คีย์ที่นี่), **2** = speed monitor
-สลับหน้าต่าง tmux: กด `Ctrl+b` แล้วกดเลขหน้าต่าง (tmux คืออะไร: [basics/08](../04-explanation/basics/08_tmux_and_byobu.md))
+สคริปต์จะเปิดหน้าต่างภาพ MuJoCo และสร้าง tmux session ชื่อ `sim2sim` ไว้เบื้องหลัง เข้าไปดูด้วย:
+```bash
+tmux attach -t sim2sim
+```
+ใน session มี 3 pane ในหน้าเดียว (tmux คืออะไร: [basics/08](../04-explanation/basics/08_tmux_and_byobu.md))
+```
++----------------------+----------------------+
+| unitree_mujoco (log) | g1_ctrl              |
++----------------------+  ← พิมพ์คีย์ที่นี่     |
+| sim_speed_monitor    |   (ถูกเลือกไว้แล้ว)    |
++----------------------+----------------------+
+```
+pane ซ้ายบนเป็นแค่**ข้อความ log** ของ sim ภาพหุ่นอยู่ในหน้าต่าง MuJoCo แยกต่างหาก
+เลือก pane: **คลิกเมาส์** (หรือ `Ctrl+b` ปล่อย แล้วกดลูกศร) · ขยาย pane เต็มจอ: `Ctrl+b` ปล่อย แล้ว `z`
 
 1. หน้าต่าง MuJoCo: กด **Pause** แล้ว **Load key 0** (stand_ready)
-2. หน้าต่าง 1 (g1_ctrl): กด `u` (FixStand) แล้ว `v` (Velocity)
+2. pane g1_ctrl (คลิกที่ terminal ก่อน ไม่ใช่หน้าต่าง MuJoCo): กด `u` (FixStand) แล้ว `v` (Velocity)
 3. กลับไป MuJoCo กด **Run**
-4. หน้าต่าง 1: `w`/`s` เดินหน้า/ถอย, `a`/`d` ซ้าย/ขวา, `q`/`e` หมุน, `x` หรือ space หยุด, `p` กลับ Passive
+4. pane g1_ctrl: `w`/`s` เดินหน้า/ถอย, `a`/`d` ซ้าย/ขวา, `q`/`e` หมุน, `x` หรือ space หยุด, `p` กลับ Passive
 
 **ผลที่ต้องเห็น:**
 - บรรทัด DDS ของ g1_ctrl เป็น `DDS: domain 1 on lo (SIM, keyboard on)`
-- หุ่นเดินตามคีย์ หน้าต่าง 2 แสดงความเร็วใกล้กับที่สั่ง (กด `w` ครั้งเดียว ≈ 0.4 m/s)
+- หุ่นเดินตามคีย์ pane speed monitor แสดงความเร็วใกล้กับที่สั่ง (กด `w` ครั้งเดียว ≈ 0.4 m/s)
 
 ## 10. ปิดเมื่อเลิกใช้ (อย่าข้าม)
 `Ctrl+b` แล้ว `d` แค่**ออก**จาก tmux แต่ g1_ctrl ยังรันต่อ ครั้งหน้าจะเปิดใหม่ไม่ได้ ("already running; stop it first")
