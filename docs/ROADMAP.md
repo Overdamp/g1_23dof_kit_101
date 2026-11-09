@@ -62,15 +62,16 @@
 
 ### Phase 2: คำศัพท์พื้นฐานสำหรับมือใหม่ (1 วัน)
 `docs/04-explanation/basics/` เขียนภาษาง่าย มีตัวอย่างให้ลองพิมพ์ ข้อละไม่เกิน 1 หน้า
-- [ ] terminal, path, `cd` และ "คำสั่งนี้รันจากโฟลเดอร์ไหน"
-- [ ] ตัวแปร environment: `export` / `unset` / `echo $X` (ใช้ตัวอย่าง "โน้ตแปะ terminal")
-- [ ] conda env คืออะไร ทำไมมี 2 ตัว (`unitree_rl_mjlab`, `g1_sdk`)
-- [ ] make คืออะไร และอ่าน Makefile จากที่ไหน
-- [ ] DDS, domain, interface (lo กับ enp43s0) และ `CYCLONEDDS_URI` (เมื่อไร set เมื่อไร unset)
-- [ ] ROS 2 กับ Unitree SDK ต่างกันอย่างไร, Fast DDS กับ Cyclone DDS
-- [ ] git worktree และเหตุที่ต้องตั้ง `PYTHONPATH`
+- [x] terminal, path, `cd` และ "คำสั่งนี้รันจากโฟลเดอร์ไหน" (9/11/2026, Overdamp)
+- [x] ตัวแปร environment: `export` / `unset` / `echo $X` (ใช้ตัวอย่าง "โน้ตแปะ terminal") (9/11/2026, Overdamp)
+- [x] conda env คืออะไร ทำไมมี 2 ตัว (`unitree_rl_mjlab`, `g1_sdk`) (9/11/2026, Overdamp)
+- [x] make คืออะไร และอ่าน Makefile จากที่ไหน (9/11/2026, Overdamp)
+- [x] DDS, domain, interface (lo กับ enp43s0) และ `CYCLONEDDS_URI` (เมื่อไร set เมื่อไร unset) (9/11/2026, Overdamp)
+- [x] ROS 2 กับ Unitree SDK ต่างกันอย่างไร, Fast DDS กับ Cyclone DDS (9/11/2026, Overdamp)
+- [x] git worktree และเหตุที่ต้องตั้ง `PYTHONPATH` (9/11/2026, Overdamp)
 
 **เสร็จเมื่อ:** มือใหม่อ่านจบแล้วตอบคำถามท้ายแต่ละหน้าได้
+(เขียนครบ 7 หน้า 9/11/2026 · คำสั่ง "ลองพิมพ์" ทุกหน้ารันจริงแล้วผลตรง · ⏳ ยังรอมือใหม่ลองอ่านจริง ซึ่งจะทำพร้อม Phase 5)
 
 ### Phase 3: Tutorial ครบ 5 วัน (3–4 วัน)
 ทุกหน้าใช้รูปแบบเดียวกัน: เป้าหมาย → คำสั่งเต็ม → ทางลัด make → ผลที่ต้องเห็น → ถ้าไม่เห็นให้ดูข้อไหน

@@ -1,5 +1,7 @@
 # Day 1: ติดตั้ง และเห็นหุ่นเดินใน sim
 
+> ยังไม่เคยใช้ terminal, conda, make หรือ DDS: อ่าน [พื้นฐาน 7 หน้า](../04-explanation/basics/README.md) ก่อน
+
 **เป้าหมาย:** จบวันนี้ `make doctor` ได้ 0 FAIL และบังคับหุ่นเดินใน unitree_mujoco ด้วยคีย์บอร์ดได้
 
 ## 1. ติดตั้ง
@@ -27,5 +29,5 @@ make sim2sim POLICY=v0
 **ผลที่ต้องเห็น:** บรรทัดแรกของ g1_ctrl เป็น `DDS: domain 1 on lo (SIM, keyboard on)` และหุ่นเดินตามคีย์
 
 ## 4. ทำความเข้าใจ (อ่านก่อนวันที่ 2)
-- ทำไม sim ใช้ domain 1 แต่หุ่นใช้ 0: docs/04-explanation (ยังไม่เขียน)
+- ทำไม sim ใช้ domain 1 แต่หุ่นใช้ 0: [basics/05](../04-explanation/basics/05_dds_domain_interface.md)
 - โครงของ FSM: Passive → FixStand → Velocity: docs/04-explanation (ยังไม่เขียน)
