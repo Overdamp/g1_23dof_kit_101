@@ -12,6 +12,13 @@
 - (ถ้าใช้ Docker) Docker + nvidia-container-toolkit
 
 ## Quickstart
+> [!IMPORTANT]
+> repo นี้เป็น **private** (มีข้อมูลภายในแลป) ก่อนโคลนต้อง
+> 1. มีบัญชี GitHub และให้ผู้ดูแลเพิ่มเป็น collaborator ของ `Overdamp/g1_23dof_kit_101`
+> 2. ตั้งการยืนยันตัวตนบนเครื่องอย่างใดอย่างหนึ่ง: `gh auth login` (GitHub CLI) หรือ personal access token (ใส่แทนรหัสผ่านตอน git ถาม) หรือ SSH key
+>
+> repo อื่นใน `repos.lock` เป็น public โคลนได้โดยไม่ต้องยืนยันตัวตน
+
 ```bash
 git clone <url ของ repo นี้> g1_23dof_kit && cd g1_23dof_kit
 make            # ดูคำสั่งทั้งหมด
@@ -56,6 +63,7 @@ g1_23dof_kit/
 | [docs/02-how-to](docs/02-how-to) | รู้ว่าจะทำอะไร ต้องการขั้นตอน (runbook) |
 | [docs/03-reference](docs/03-reference) | หาค่า, flag, ตาราง · [make_targets.md](docs/03-reference/make_targets.md) = แต่ละ `make` รันอะไรจริง |
 | [docs/04-explanation](docs/04-explanation) | อยากรู้ว่าทำไมออกแบบแบบนี้ |
+| [docs/05-history](docs/05-history/README.md) | เหตุการณ์และผลทดสอบหุ่นจริงที่ผ่านมา |
 | [docs/pitfalls.md](docs/pitfalls.md) | เจอ error |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | แผนพัฒนา kit + checklist |
 

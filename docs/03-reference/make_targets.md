@@ -66,6 +66,7 @@ make -n <target>          # เช่น make -n sim2sim POLICY=v0
 | `sim2sim-stop` | ปิด tmux session `sim2sim` ที่ค้างอยู่ (g1_ctrl + monitor) ถ้าไม่มี session ก็แค่บอก ไม่ error | `tmux kill-session -t sim2sim` | – |
 | `gain-check` | ตรวจโฟลเดอร์ policy: kp, kd, scale, offset ใน `deploy.yaml` ตรงกับค่าที่ฝังใน `policy.onnx` ไหม และขนาด obs ตรงไหม | `$(in_sdk) python SCRIPTS/gain_check.py ROBOT/config/policy/velocity/POLICY` | `SCRIPTS/gain_check.py` |
 | `sim` | เปิด sim อย่างเดียว | `cd RL/simulate/build && env -u CYCLONEDDS_URI LD_LIBRARY_PATH=/opt/unitree_robotics/lib ./unitree_mujoco -i SIM_DOMAIN` | `RL/simulate/build/unitree_mujoco`, `RL/simulate/config.yaml` |
+| `sim-band` | sim ที่มีเชือก (elastic band) สำหรับทดสอบสคริปต์ที่ขยับหุ่นเหมือนแขวนบน gantry | `bash KIT/scripts/sim_band.sh WS SIM_DOMAIN` (ทำสำเนาไว้ที่ `/tmp/g1_sim_band` แล้วเปิด `enable_elastic_band`) | `KIT/scripts/sim_band.sh` |
 | `ctrl-sim` | g1_ctrl คุยกับ sim (คีย์บอร์ดใช้ได้) | `cd ROBOT/build && env -u CYCLONEDDS_URI LD_LIBRARY_PATH=... ./g1_ctrl --network lo --domain SIM_DOMAIN` | `ROBOT/build/g1_ctrl`, `ROBOT/config/config.yaml` |
 | `deploy-sim` | ซ้อมวันทดสอบ: byobu 4 ช่องบน lo | `$(in_sdk) IFACE=lo bash SCRIPTS/deploy_byobu.sh RUN TAG` | `SCRIPTS/deploy_byobu.sh` |
 
@@ -97,6 +98,6 @@ make -n <target>          # เช่น make -n sim2sim POLICY=v0
 | `VIEWER` | `viser` | `play` (`native` = หน้าต่าง MuJoCo) |
 | `POLICY` | `v0` | `eval`, `sim2sim`, `gain-check` (ชื่อโฟลเดอร์ใต้ `ROBOT/config/policy/velocity/`) |
 | `CASES` | (ชุดในสคริปต์) | `eval` เช่น `"0.4,0,0;0,0,0.5"` |
-| `SIM_DOMAIN` | `1` | `sim`, `ctrl-sim` (`0` เฉพาะกรณี g1pilot) |
+| `SIM_DOMAIN` | `1` | `sim`, `sim-band`, `ctrl-sim` (`0` เฉพาะกรณี g1pilot) |
 | `IFACE` | (ต้องใส่) | `deploy-real`, `health` |
 | `RUN`, `TAG` | `1`, `run` | `deploy-sim`, `deploy-real` (ชื่อไฟล์ log) |

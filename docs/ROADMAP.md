@@ -88,11 +88,18 @@
 
 ### Phase 4: ย้ายความรู้จาก vault มาเป็น docs (2–3 วัน)
 ตัดข้อมูลเฉพาะเครื่องออก และเปลี่ยน alias ใน bashrc ให้เป็น `make <target>`
-- [ ] how-to: terminal cmd, deploy_byobu, Test Day Procedure, Stop Mechanisms
-- [ ] how-to: Hi-level cmd + ros2 cmd (.164) โดยไม่ใส่รหัสผ่าน
-- [ ] reference: flag ของ g1_ctrl และสคริปต์, ตาราง joint / kp / kd, Deploy Contract, DDS and Domains, Glossary
-- [ ] explanation: แยก sim/หุ่นจริง, FixStand กับ gain, DR แต่ละ phase, cross-sim Isaac, บันไดโปร่ง (Phase 4 stairs)
-- [ ] ตรวจด้วย `grep -rnE "/home/|password|token"` ก่อน commit ทุกครั้ง
+- [x] how-to: terminal cmd, deploy_byobu (byobu_guide), Test Day Procedure, Stop Mechanisms (อยู่ใน explanation) (10/11/2026, Overdamp)
+- [x] how-to: Hi-level cmd + ros2 cmd (.164) โดยไม่ใส่รหัสผ่าน · ตัดย่อหน้าที่บอกว่า history ของ .164 มีรหัส Docker ออก (10/11/2026, Overdamp)
+- [x] reference: flag ของสคริปต์ (real_robot_tools), ตาราง joint (joint_map_and_slots), kp / kd (armature_and_gains), Deploy Contract, Glossary (10/11/2026, Overdamp)
+- [x] explanation: แยก sim/หุ่นจริง (dds_and_domains), FixStand กับ gain, DR แต่ละ phase, cross-sim Isaac (10/11/2026, Overdamp)
+- [ ] explanation: บันไดโปร่ง (Phase 4 stairs) · รอให้งานบน branch `phase4-stairs` นิ่งก่อน (ตอนนี้มีแค่แผน `doc/g1_23dof_stairs_plan.md`)
+- [x] ตรวจด้วย grep (`/home/luke`, `luke-mini`, password, token, docker login, claude.ai, obsidian://) ก่อน commit (10/11/2026, Overdamp)
+- [x] เพิ่ม `make sim-band` (sim ที่มีเชือก) แทน `~/sim_band` ที่มีเฉพาะบนเครื่องผู้ดูแล (10/11/2026, Overdamp)
+- [ ] ตัดสินว่าต่อไปฉบับไหนเป็นต้นฉบับ (kit หรือ vault) ไม่อย่างนั้นสองฉบับจะค่อยๆ ขัดกัน · แนะนำ: kit เป็นต้นฉบับของเรื่องที่ส่งต่อ vault เก็บเรื่องส่วนตัวและการเรียน
+- [x] repo kit เปลี่ยนเป็น **private** แล้ว เพราะ docs มีรายละเอียดภายในแลป (10/11/2026, Overdamp) · README, Day 1 และขั้นตอน Phase 5 บอกวิธีขอสิทธิ์และยืนยันตัวตนแล้ว · fork `unitree_rl_mjlab` ยังเป็น public (มี `doc/` ของหุ่นจริงอยู่ด้วย ตัดสินแยก)
+
+ย้าย 43 โน้ต (how-to 15, reference 14, explanation 11, history 3) ด้วยสคริปต์แปลง wiki link / callout แล้วแก้ alias และลิงก์ส่วนตัวด้วยมือ · ไม่ย้าย: Home, Study Plan, ดัชนี vault เก่า `g1_sim2sim`
+ไม่มีลิงก์เสีย (ตรวจทุกไฟล์ .md) · `make check` ผ่าน
 
 **เสร็จเมื่อ:** คำถามที่เคยถามกันบ่อยมีคำตอบใน docs และลิงก์ถึงกันหมด
 

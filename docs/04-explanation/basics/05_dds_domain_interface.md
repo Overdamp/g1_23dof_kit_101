@@ -32,7 +32,7 @@ domain **ไม่ใช่**เครื่อง: คอมสองเคร�
 
 | terminal ไว้ทำ | โน้ต | เพราะ |
 |---|---|---|
-| ROS 2 | **set** (`ros_lo`, `source unitree_ros2/setup.sh`) | ROS ไม่มี `--network` ให้เลือก ต้องบอกผ่านโน้ต |
+| ROS 2 | **set** (`export CYCLONEDDS_URI=...` เอง หรือ `source unitree_ros2/setup.sh`) | ROS ไม่มี `--network` ให้เลือก ต้องบอกผ่านโน้ต |
 | Unitree SDK, g1_ctrl, `make ...` | **unset** | มี `--network` อยู่แล้ว โน้ตเก่าจะมาขวาง |
 
 อาการที่พบเมื่อลืม: g1_ctrl ค้างที่ "Waiting for connection" โดยไม่มี error ใดๆ

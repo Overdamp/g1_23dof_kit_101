@@ -180,6 +180,11 @@ sim: ## unitree_mujoco alone (lo, domain SIM_DOMAIN=1)
 	cd $(SIM_DIR)/build && env -u CYCLONEDDS_URI LD_LIBRARY_PATH=$(SDK2_PREFIX)/lib \
 	  ./unitree_mujoco -i $(SIM_DOMAIN)
 
+.PHONY: sim-band
+sim-band: ## unitree_mujoco with the rope (elastic band) on: keys 9 on/off, 7 raise, 8 lower
+	$(need_ws)
+	@SDK2_PREFIX=$(SDK2_PREFIX) bash $(KIT)/scripts/sim_band.sh $(WS) $(SIM_DOMAIN)
+
 .PHONY: ctrl-sim
 ctrl-sim: ## g1_ctrl against the sim (keyboard: u FixStand, v Velocity, p Passive)
 	$(need_ws)

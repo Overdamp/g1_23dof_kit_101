@@ -10,6 +10,13 @@
 ---
 
 ## 1. โคลน kit และดูเมนู
+> [!IMPORTANT]
+> repo นี้เป็น **private** (มีข้อมูลภายในแลป) ก่อนโคลนต้อง (ดู README)
+> 1. มีบัญชี GitHub และให้ผู้ดูแลเพิ่มเป็น collaborator ของ `Overdamp/g1_23dof_kit_101`
+> 2. ตั้งการยืนยันตัวตนบนเครื่องอย่างใดอย่างหนึ่ง: `gh auth login` (GitHub CLI) หรือ personal access token (ใส่แทนรหัสผ่านตอน git ถาม) หรือ SSH key
+>
+> repo อื่นใน `repos.lock` เป็น public โคลนได้โดยไม่ต้องยืนยันตัวตน
+
 ```bash
 git clone https://github.com/Overdamp/g1_23dof_kit_101.git ~/nvidia/unitree/g1_23dof_kit
 cd ~/nvidia/unitree/g1_23dof_kit
