@@ -63,6 +63,17 @@ if [ -f "$CONDA_SH" ]; then
   }
   check_env "$RL_ENV" 3.11 "import mjlab, mujoco, mujoco_warp, torch; from importlib.metadata import version as v; print('OK mjlab', v('mjlab'), 'mujoco', mujoco.__version__, 'torch', torch.__version__, 'cuda', torch.cuda.is_available())"
   check_env "$SDK_ENV" 3.10 "import unitree_sdk2py, cyclonedds, onnxruntime, mujoco; print('OK unitree_sdk2py, cyclonedds, onnxruntime, mujoco', mujoco.__version__)"
+  # Importing is not enough: open DDS the way the Unitree scripts do. On aarch64
+  # the python package can pick the wrong libddsc at run time and abort here.
+  if conda env list | awk '{print $1}' | grep -qx "$SDK_ENV"; then
+    out=$(conda run -n "$SDK_ENV" --no-capture-output env -u CYCLONEDDS_URI python -c \
+      "from unitree_sdk2py.core.channel import ChannelFactoryInitialize; ChannelFactoryInitialize(1, 'lo'); print('OK')" 2>&1)
+    if echo "$out" | grep -q '^OK'; then pass "env $SDK_ENV opens DDS (domain 1 on lo)"
+    elif echo "$out" | grep -q 'buffer overflow'; then
+      fail "env $SDK_ENV: python DDS aborts (buffer overflow) = wrong libddsc loaded"
+      hint "docs/pitfalls.md, row 'buffer overflow detected' (set CYCLONEDDS_HOME for the env)"
+    else warn "env $SDK_ENV could not open DDS: $(echo "$out" | grep -v -e 'conda.cli.main_run' -e '^ *$' | tail -1)"; fi
+  fi
   if conda run -n "$RL_ENV" pip show unitree_rl_mjlab 2>/dev/null | grep -q "Editable project location"; then
     loc=$(conda run -n "$RL_ENV" pip show unitree_rl_mjlab | sed -n 's/^Editable project location: //p')
     [ "$loc" = "$RL" ] && pass "editable install points at WS ($loc)" \
@@ -77,6 +88,15 @@ section "Builds"
   && pass "unitree_sdk2 installed in $SDK2_PREFIX" || { fail "unitree_sdk2 not in $SDK2_PREFIX"; hint "make sdk2"; }
 [ -x "$RL/simulate/build/unitree_mujoco" ] && pass "unitree_mujoco built" || { fail "unitree_mujoco not built"; hint "make build"; }
 [ -x "$RL/deploy/robots/g1_23dof/build/g1_ctrl" ] && pass "g1_ctrl built" || { fail "g1_ctrl not built"; hint "make build"; }
+# A git checkout/pull changes sources but not the binary: an old g1_ctrl then
+# misses options the docs use (e.g. "unrecognised option '--domain'").
+for pair in "deploy/robots/g1_23dof/build/g1_ctrl:deploy/robots/g1_23dof deploy/include" \
+            "simulate/build/unitree_mujoco:simulate/src"; do
+  bin="$RL/${pair%%:*}"; [ -x "$bin" ] || continue
+  newer=$(cd "$RL" && find ${pair#*:} -path '*/build' -prune -o \
+          \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name CMakeLists.txt \) -newer "$bin" -print | head -1)
+  [ -z "$newer" ] || { warn "$(basename "$bin") is older than its source ($newer)"; hint "make build"; }
+done
 for p in "$RL"/deploy/robots/g1_23dof/config/policy/velocity/*/; do
   [ -f "$p/exported/policy.onnx" ] && [ -f "$p/params/deploy.yaml" ] && pass "policy $(basename "$p")" \
     || warn "policy $(basename "$p") lacks exported/policy.onnx or params/deploy.yaml"

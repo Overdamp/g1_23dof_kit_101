@@ -72,5 +72,6 @@ README → `make clone` / `envs` / `build` → `make doctor` **0 FAIL** (ไม�
 ใช้สำหรับ **เทรน + ควบคุมใน sim เท่านั้น** (ไม่ต่อหุ่นจริง) ใช้ `make set-ws WS=~/nvidia/unitree` กับ repo ที่มีอยู่
 `make doctor` **0 FAIL** ต้องทำเพิ่ม:
 - `make clone` เพื่อเพิ่ม `unitree_sdk2_python` ที่ยังไม่มี (ตัวที่มีอยู่แล้วไม่ถูกแตะ)
-- `cyclonedds` ของ Python บน aarch64: build Cyclone C 0.10.x เอง (ดูแถว `libddsc.so.11` ใน `docs/pitfalls.md`)
+- `cyclonedds` ของ Python บน aarch64: build Cyclone C 0.10.x เอง และตั้ง `CYCLONEDDS_HOME` ใน env `g1_sdk` (สองแถว aarch64 ใน `docs/pitfalls.md`) ไม่อย่างนั้นเครื่องมือ Python ตายด้วย buffer overflow
+- หลังเปลี่ยน checkout ต้อง `make build` ใหม่ (g1_ctrl ตัวเก่าไม่รู้จัก `--domain`) doctor เตือนเรื่องนี้แล้ว
 - g1_ctrl + unitree_mujoco build บน aarch64 ได้เลย (onnxruntime aarch64 มีใน repo)
