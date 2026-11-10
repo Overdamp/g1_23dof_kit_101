@@ -116,10 +116,14 @@ build-sim: ## Build unitree_mujoco only
 	cmake -S $(SIM_DIR) -B $(SIM_DIR)/build -DCMAKE_BUILD_TYPE=Release
 	cmake --build $(SIM_DIR)/build -j$$(nproc)
 
+# g1_ctrl's CMakeLists has no find_package(unitree_sdk2): tell it where sdk2 lives.
+# (An old build/ may hide this: its CMakeCache remembers flags typed once by hand.)
+CTRL_SDK_FLAGS = -DCMAKE_CXX_FLAGS="-I$(SDK2_PREFIX)/include -I$(SDK2_PREFIX)/include/ddscxx" \
+  -DCMAKE_EXE_LINKER_FLAGS="-L$(SDK2_PREFIX)/lib -Wl,-rpath,$(SDK2_PREFIX)/lib"
 .PHONY: build-ctrl
 build-ctrl: ## Build g1_ctrl only
 	$(need_ws)
-	cmake -S $(ROBOT) -B $(ROBOT)/build -DCMAKE_BUILD_TYPE=Release
+	cmake -S $(ROBOT) -B $(ROBOT)/build -DCMAKE_BUILD_TYPE=Release $(CTRL_SDK_FLAGS)
 	cmake --build $(ROBOT)/build -j$$(nproc)
 
 # ---------------------------------------------------------------------------

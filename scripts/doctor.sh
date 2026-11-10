@@ -104,8 +104,13 @@ done
 section "Docker (optional)"
 if command -v docker >/dev/null; then
   pass "$(docker --version)"
-  docker info 2>/dev/null | grep -qi nvidia && pass "NVIDIA runtime registered" \
-    || warn "NVIDIA runtime not seen by docker (nvidia-container-toolkit)"
+  if ! docker info >/dev/null 2>&1; then
+    warn "docker daemon not reachable as $(id -un) (not in group docker? an admin runs: sudo usermod -aG docker $(id -un))"
+  elif docker info 2>/dev/null | grep -qi nvidia; then
+    pass "NVIDIA runtime registered"
+  else
+    warn "NVIDIA runtime not seen by docker (nvidia-container-toolkit)"
+  fi
 else
   warn "docker not installed (only needed for make docker-*)"
 fi
