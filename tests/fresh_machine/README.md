@@ -55,3 +55,22 @@ xhost -SI:localuser:g1test
 sudo deluser --remove-home g1test   # ลบ home ทั้งหมดของ g1test (คืนดิสก์ราว 15–20 GB) ย้อนกลับไม่ได้
 ```
 ก่อนลบ: ก๊อปตารางผลออกมาไว้ใน ROADMAP หรือ issue ก่อน
+
+## ผลที่ทดสอบแล้ว (10/11/2026)
+### luke-mini (x86_64, Ubuntu 22.04), user ใหม่ g1test
+README → `make clone` / `envs` / `build` → `make doctor` **0 FAIL** (ไม่นับเวลารอโหลด) ต้องแก้ kit ระหว่างทาง 6 จุด (แก้แล้วทั้งหมด อยู่ใน `docs/pitfalls.md`):
+1. `make envs`: conda 26 ติด ToS ของ Anaconda → `make_envs.sh` ให้ `defaults` ชี้ conda-forge
+2. `make build-ctrl`: หา `go2.h` ไม่เจอ (build ของผู้ดูแลผ่านเพราะ CMakeCache จำ flag) → Makefile ส่ง path ของ sdk2
+3. `make build`: `fmt` ของ Miniconda ชนกับ spdlog → `NO_CONDA_FIND`
+4. `make smoke`: log ใน `/tmp` เป็นของ user อื่น → `/tmp/kit_smoke_<user>/`
+5. env เทรนขาด `scipy` (mjlab ไม่ได้ประกาศไว้)
+6. env `g1_sdk` ขาด `onnx` (env ของผู้ดูแลพึ่ง `~/.local` จึงไม่เคยเห็น)
+
+ยังไม่ได้ทดสอบบน g1test: `make smoke` หลังแก้ข้อ 5–6, `make sim2sim`, Day 2 (หยุดก่อนเพื่อคืนดิสก์)
+
+### DGX Spark (aarch64, GB10, Ubuntu 24.04), user เดิม
+ใช้สำหรับ **เทรน + ควบคุมใน sim เท่านั้น** (ไม่ต่อหุ่นจริง) ใช้ `make set-ws WS=~/nvidia/unitree` กับ repo ที่มีอยู่
+`make doctor` **0 FAIL** ต้องทำเพิ่ม:
+- `make clone` เพื่อเพิ่ม `unitree_sdk2_python` ที่ยังไม่มี (ตัวที่มีอยู่แล้วไม่ถูกแตะ)
+- `cyclonedds` ของ Python บน aarch64: build Cyclone C 0.10.x เอง (ดูแถว `libddsc.so.11` ใน `docs/pitfalls.md`)
+- g1_ctrl + unitree_mujoco build บน aarch64 ได้เลย (onnxruntime aarch64 มีใน repo)
