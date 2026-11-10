@@ -77,7 +77,7 @@ policy 500 รอบจาก Day 2 คาดว่าจะยังไม่�
 ```bash
 make sim2sim POLICY=myrun_500      # คำสั่งเต็มเหมือน Day 1 ขั้น 9 แค่เปลี่ยนชื่อ policy
 ```
-`sim2sim_policy.sh` ก๊อป `g1_ctrl` กับ config ไปไว้ใน `/tmp/g1_sim2sim_<ชื่อ>` แล้วชี้ไปที่ policy นี้ **ไม่แตะ config จริง** (`config.yaml` ยัง pin ไว้ที่ `v0`)
+`sim2sim_policy.sh` ก๊อป `g1_ctrl` กับ config ไปไว้ใน `/tmp/g1_sim2sim_<user>_<ชื่อ>` แล้วชี้ไปที่ policy นี้ **ไม่แตะ config จริง** (`config.yaml` ยัง pin ไว้ที่ `v0`)
 
 **ผลที่ต้องเห็น:** g1_ctrl พิมพ์ว่าโหลด policy จากโฟลเดอร์ `myrun_500` ทำตาม Day 1 ขั้น 9 แล้วเทียบความเร็วใน pane speed monitor กับผลของ `vel_eval`
 

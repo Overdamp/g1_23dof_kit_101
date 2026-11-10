@@ -38,7 +38,7 @@ sudo apt install -y git cmake build-essential tmux byobu libyaml-cpp-dev \
 **คำสั่งเต็ม:** อ่าน `repos.lock` แล้วทำทีละแถว เช่น
 ```bash
 git clone --branch phase3-delay-dr https://github.com/Overdamp/unitree_rl_mjlab.git repos/unitree_rl_mjlab
-git -C repos/unitree_rl_mjlab checkout cba2434
+git -C repos/unitree_rl_mjlab checkout f55e2d5
 # ... ทำแบบเดียวกันกับ unitree_sdk2 และ unitree_sdk2_python
 ```
 **ทางลัด:** `make clone` (`scripts/clone_repos.sh` ข้ามตัวที่มีอยู่แล้ว ไม่เขียนทับ)

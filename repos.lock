@@ -4,6 +4,6 @@
 # when a checkout has moved away from it. Bump a commit here only after
 # `make smoke` passes on the new one.
 
-unitree_rl_mjlab      https://github.com/Overdamp/unitree_rl_mjlab.git              phase3-delay-dr  cba2434
+unitree_rl_mjlab      https://github.com/Overdamp/unitree_rl_mjlab.git              phase3-delay-dr  f55e2d5
 unitree_sdk2          https://github.com/unitreerobotics/unitree_sdk2.git           main             63096d0
 unitree_sdk2_python   https://github.com/unitreerobotics/unitree_sdk2_python.git    master           814556d

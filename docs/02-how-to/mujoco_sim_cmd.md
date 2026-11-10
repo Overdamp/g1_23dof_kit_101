@@ -128,7 +128,7 @@ python $S/gain_check.py $P/v0
 ```bash
 # เปิด tmux 3 pane ในหน้าเดียว: ซ้ายบน log ของ mujoco · ซ้ายล่าง ความเร็ว · ขวา g1_ctrl (พิมพ์ปุ่มที่นี่ ถูกเลือกไว้แล้ว, คลิกเมาส์ได้)
 # เลิกใช้: tmux kill-session -t sim2sim
-# ใช้สำเนาของ g1_ctrl + config ใน /tmp/g1_sim2sim_<policy> → ไม่แตะ config จริง
+# ใช้สำเนาของ g1_ctrl + config ใน /tmp/g1_sim2sim_<user>_<policy> → ไม่แตะ config จริง
 $S/sim2sim_policy.sh v0      # เข้า tmux ให้เอง (ออกแล้วกลับเข้า: tmux attach -t sim2sim)
 ```
 ขั้นตอนใน sim:
@@ -176,7 +176,7 @@ cd ~/nvidia/unitree/unitree_rl_mjlab/simulate/build && cmake .. && make -j8
 ```
 
 ## 4. sim แบบหุ่นแขวน (elastic band = เชือก) สำหรับทดสอบสคริปต์ที่ส่งแรง
-ใช้ทดสอบ sysid_motion, FixStand, Handover, L2 + B ก่อนขึ้นหุ่นจริง · `make sim-band` ทำสำเนา sim ไว้ที่ `/tmp/g1_sim_band` (`config.yaml` ที่ `enable_elastic_band: 1`, `robot_scene` เป็น path เต็ม, domain 1) ไม่แตะ config ของ repo
+ใช้ทดสอบ sysid_motion, FixStand, Handover, L2 + B ก่อนขึ้นหุ่นจริง · `make sim-band` ทำสำเนา sim ไว้ที่ `/tmp/g1_sim_band_<user>` (`config.yaml` ที่ `enable_elastic_band: 1`, `robot_scene` เป็น path เต็ม, domain 1) ไม่แตะ config ของ repo
 ```bash
 make sim-band
 # คำสั่งเต็มอยู่ใน scripts/sim_band.sh ของ kit

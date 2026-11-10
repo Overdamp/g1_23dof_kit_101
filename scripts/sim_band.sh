@@ -16,7 +16,7 @@ set -euo pipefail
 WS="${1:?usage: $0 <WS> [domain]}"
 DOMAIN="${2:-1}"
 SIM="$WS/unitree_rl_mjlab/simulate"
-WORK="${WORK:-/tmp/g1_sim_band}"
+WORK="${WORK:-/tmp/g1_sim_band_${USER:-$(id -un)}}"   # per user: /tmp is shared
 SDK2_PREFIX="${SDK2_PREFIX:-/opt/unitree_robotics}"
 
 [ -x "$SIM/build/unitree_mujoco" ] || { echo "No $SIM/build/unitree_mujoco: make build first."; exit 1; }
