@@ -55,7 +55,8 @@ if [ -f "$CONDA_SH" ]; then
       fail "env $env missing"; hint "make envs"; return
     fi
     local out
-    out=$(conda run -n "$env" --no-capture-output env -u CYCLONEDDS_URI python -c "$code" 2>&1 | tail -1)
+    out=$(conda run -n "$env" --no-capture-output env -u CYCLONEDDS_URI python -c "$code" 2>&1 \
+      | grep -v -e 'conda.cli.main_run' -e '^ *$' | tail -1)   # the python error, not conda's wrapper line
     if [[ "$out" == OK* ]]; then pass "env $env: ${out#OK }"; else fail "env $env: $out"; fi
     conda run -n "$env" python -c "import sys; sys.exit(0 if sys.version.startswith('$pyver') else 1)" \
       || warn "env $env is not Python $pyver"

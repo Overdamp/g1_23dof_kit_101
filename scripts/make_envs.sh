@@ -16,6 +16,12 @@ export CONDA_DEFAULT_CHANNELS="https://conda.anaconda.org/conda-forge"
 
 have() { conda env list | awk '{print $1}' | grep -qx "$1"; }
 
+# Both envs pip-install a checkout from WS: check they are there before
+# spending 10+ minutes on downloads.
+for repo in unitree_rl_mjlab unitree_sdk2_python; do
+  [ -d "$WS/$repo" ] || { echo "No $WS/$repo: run make clone first (it only adds missing repos)."; exit 1; }
+done
+
 if have unitree_rl_mjlab; then
   echo "skip  unitree_rl_mjlab (exists)"
 else
@@ -24,7 +30,12 @@ else
 fi
 
 if have g1_sdk; then
-  echo "skip  g1_sdk (exists)"
+  if conda run -n g1_sdk python -c "import unitree_sdk2py" >/dev/null 2>&1; then
+    echo "skip  g1_sdk (exists)"
+  else  # env made but the sdk2_python install failed last time
+    echo "fix   g1_sdk: installing unitree_sdk2_python"
+    conda run -n g1_sdk pip install -e "$WS/unitree_sdk2_python"
+  fi
 else
   conda env create -f "$KIT/envs/g1_sdk.yml"
   conda run -n g1_sdk pip install -e "$WS/unitree_sdk2_python"
