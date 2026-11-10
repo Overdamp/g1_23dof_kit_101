@@ -100,10 +100,9 @@ bash deploy/robots/g1_23dof/scripts/sim2sim_policy.sh v0
 ```
 **ทางลัด:** `make sim2sim POLICY=v0`
 
-สคริปต์จะเปิดหน้าต่างภาพ MuJoCo และสร้าง tmux session ชื่อ `sim2sim` ไว้เบื้องหลัง เข้าไปดูด้วย:
-```bash
-tmux attach -t sim2sim
-```
+สคริปต์จะเปิดหน้าต่างภาพ MuJoCo แล้วพาเข้า tmux session ชื่อ `sim2sim` ให้เลย
+(ถ้าออกมาแล้วจะกลับเข้าไปใหม่: `tmux attach -t sim2sim`)
+
 ใน session มี 3 pane ในหน้าเดียว (tmux คืออะไร: [basics/08](../04-explanation/basics/08_tmux_and_byobu.md))
 ```
 +----------------------+----------------------+
