@@ -9,6 +9,10 @@ WS="${1:-$KIT/repos}"
 CONDA_SH="${CONDA_SH:-$HOME/miniconda3/etc/profile.d/conda.sh}"
 # shellcheck disable=SC1090
 source "$CONDA_SH"
+# A new Miniconda lists the Anaconda channel "defaults", which needs its Terms of
+# Service accepted (CondaToSNonInteractiveError). The envs only need conda-forge,
+# so for this script "defaults" means conda-forge. Your own conda config is untouched.
+export CONDA_DEFAULT_CHANNELS="https://conda.anaconda.org/conda-forge"
 
 have() { conda env list | awk '{print $1}' | grep -qx "$1"; }
 

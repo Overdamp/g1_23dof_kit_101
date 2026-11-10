@@ -2,7 +2,7 @@
 # (monitors, health, vel_eval). make envs creates it, then pip-installs
 # unitree_sdk2_python from WS (editable).
 name: g1_sdk
-channels: [conda-forge, nodefaults]   # nodefaults: no Anaconda ToS prompt on a new Miniconda
+channels: [conda-forge, nodefaults]   # see scripts/make_envs.sh for the Anaconda ToS note
 dependencies:
   - python=3.10
   - pip

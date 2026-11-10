@@ -1,7 +1,7 @@
 # Training env (mjlab + rsl_rl on the GPU). Versions = the ones Phase 3b/4 trained with.
 # make envs creates it, then pip-installs the unitree_rl_mjlab checkout (editable).
 name: unitree_rl_mjlab
-channels: [conda-forge, nodefaults]   # nodefaults: no Anaconda ToS prompt on a new Miniconda
+channels: [conda-forge, nodefaults]   # see scripts/make_envs.sh for the Anaconda ToS note
 dependencies:
   - python=3.11
   - pip

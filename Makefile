@@ -110,10 +110,15 @@ sdk2: ## Build unitree_sdk2; prints the sudo install step for you to run
 .PHONY: build
 build: build-sim build-ctrl ## Build unitree_mujoco (sim) and g1_ctrl (controller)
 
+# Do not let cmake find libraries inside conda (it searches every folder on PATH,
+# and a new Miniconda base ships yaml-cpp + fmt that clash with the system spdlog).
+# -U drops a conda path an earlier configure may have cached.
+NO_CONDA_FIND = -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF \
+  -Uyaml-cpp_DIR -Ufmt_DIR -UZLIB_INCLUDE_DIR -UZLIB_LIBRARY_RELEASE -UZLIB_LIBRARY_DEBUG
 .PHONY: build-sim
 build-sim: ## Build unitree_mujoco only
 	$(need_ws)
-	cmake -S $(SIM_DIR) -B $(SIM_DIR)/build -DCMAKE_BUILD_TYPE=Release
+	cmake -S $(SIM_DIR) -B $(SIM_DIR)/build -DCMAKE_BUILD_TYPE=Release $(NO_CONDA_FIND)
 	cmake --build $(SIM_DIR)/build -j$$(nproc)
 
 # g1_ctrl's CMakeLists has no find_package(unitree_sdk2): tell it where sdk2 lives.
@@ -123,7 +128,7 @@ CTRL_SDK_FLAGS = -DCMAKE_CXX_FLAGS="-I$(SDK2_PREFIX)/include -I$(SDK2_PREFIX)/in
 .PHONY: build-ctrl
 build-ctrl: ## Build g1_ctrl only
 	$(need_ws)
-	cmake -S $(ROBOT) -B $(ROBOT)/build -DCMAKE_BUILD_TYPE=Release $(CTRL_SDK_FLAGS)
+	cmake -S $(ROBOT) -B $(ROBOT)/build -DCMAKE_BUILD_TYPE=Release $(NO_CONDA_FIND) $(CTRL_SDK_FLAGS)
 	cmake --build $(ROBOT)/build -j$$(nproc)
 
 # ---------------------------------------------------------------------------
