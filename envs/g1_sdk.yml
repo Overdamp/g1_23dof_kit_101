@@ -10,5 +10,6 @@ dependencies:
       - cyclonedds==0.10.2
       - numpy==2.2.6
       - onnxruntime==1.23.2
+      - onnx==1.23.2          # gain_check.py reads the gains inside policy.onnx
       - mujoco==3.14.0
       - pyyaml
