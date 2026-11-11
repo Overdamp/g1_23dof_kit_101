@@ -57,7 +57,7 @@ sudo deluser --remove-home g1test   # ลบ home ทั้งหมดของ
 ก่อนลบ: ก๊อปตารางผลออกมาไว้ใน ROADMAP หรือ issue ก่อน
 
 ## ผลที่ทดสอบแล้ว (10/11/2026)
-### luke-mini (x86_64, Ubuntu 22.04), user ใหม่ g1test
+### เครื่องผู้ดูแล (x86_64, Ubuntu 22.04), user ใหม่ g1test
 README → `make clone` / `envs` / `build` → `make doctor` **0 FAIL** (ไม่นับเวลารอโหลด) ต้องแก้ kit ระหว่างทาง 6 จุด (แก้แล้วทั้งหมด อยู่ใน `docs/pitfalls.md`):
 1. `make envs`: conda 26 ติด ToS ของ Anaconda → `make_envs.sh` ให้ `defaults` ชี้ conda-forge
 2. `make build-ctrl`: หา `go2.h` ไม่เจอ (build ของผู้ดูแลผ่านเพราะ CMakeCache จำ flag) → Makefile ส่ง path ของ sdk2

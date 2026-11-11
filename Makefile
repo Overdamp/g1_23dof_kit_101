@@ -224,7 +224,7 @@ health: ## Read-only robot health check: make health IFACE=enp43s0
 ##@ Checks, Docker, docs
 
 .PHONY: check
-check: ## Static checks, no GPU: script syntax, Makefile rules, make_targets.md complete
+check: ## Static checks, no GPU: scripts, Makefile rules, make_targets.md, doc links, secrets
 	@bash $(KIT)/tests/check_kit.sh
 
 .PHONY: smoke

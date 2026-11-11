@@ -7,6 +7,10 @@
 #        continuations do not count); longer logic belongs in a script
 #   3. docs/03-reference/make_targets.md has a row for every target, and no
 #      row for a target that no longer exists
+#   4. every relative link in a .md file points at a file that exists
+#   5. no token-shaped strings or one-machine home paths in tracked files
+#      (the "no secrets" rule in CONTRIBUTING.md)
+#   6. shellcheck (warnings and errors) when it is installed; CI has it
 set -uo pipefail
 
 KIT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -64,6 +68,34 @@ if problems:
     sys.exit(1)
 print(f"  \033[32mPASS\033[0m  {len(targets)} targets: all described, all <= 3 commands, all in make_targets.md")
 EOF
+
+echo "Docs links"
+python3 "$KIT/tests/check_links.py" "$KIT" || fails=$((fails + 1))
+
+echo "Secrets and one-machine paths"
+# Tracked files only; all files outside .git and repos when this is not a git checkout.
+files=$(cd "$KIT" && { git ls-files 2>/dev/null || find . -type f -not -path './.git/*' -not -path './repos/*' | sed 's|^\./||'; })
+# Tokens and keys by their shape, and a home path that exists on one person's machine.
+pattern='ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|/home/luke/'
+hits=$(cd "$KIT" && echo "$files" | grep -v -e '^tests/check_kit.sh$' | xargs -d '\n' grep -nE -e "$pattern" 2>/dev/null | cut -c1-120 | head -5)
+if [ -z "$hits" ]; then
+  ok "no token-shaped strings or maintainer home paths in tracked files"
+else
+  bad "secret or one-machine path in a tracked file:"
+  echo "$hits" | sed 's/^/          /'
+fi
+
+echo "shellcheck"
+if command -v shellcheck >/dev/null; then
+  if out=$(shellcheck -S warning "$KIT"/scripts/*.sh "$KIT"/tests/*.sh 2>&1); then
+    ok "scripts/*.sh tests/*.sh (warnings and errors)"
+  else
+    bad "shellcheck:"
+    echo "$out" | head -20 | sed 's/^/          /'
+  fi
+else
+  printf '  \e[33mSKIP\e[0m  shellcheck not installed (CI runs it; sudo apt install shellcheck)\n'
+fi
 
 echo
 if [ "$fails" -eq 0 ]; then echo "check: all PASS"; else echo "check: $fails FAIL"; exit 1; fi

@@ -30,7 +30,7 @@ for t in git cmake tmux byobu; do
 done
 
 section "Repos (WS=$WS)"
-while read -r dir url branch commit; do
+while read -r dir _url _branch commit; do
   [[ -z "${dir:-}" || "$dir" == \#* ]] && continue
   if [ ! -d "$WS/$dir/.git" ] && [ ! -f "$WS/$dir/.git" ]; then
     fail "$dir missing"; hint "make clone"; continue

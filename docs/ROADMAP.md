@@ -104,7 +104,7 @@
 **เสร็จเมื่อ:** คำถามที่เคยถามกันบ่อยมีคำตอบใน docs และลิงก์ถึงกันหมด
 
 ### Phase 5: ทดสอบบนเครื่องเปล่า (1–2 วัน, สำคัญที่สุด)
-- [x] สร้าง user ใหม่บนเครื่องนี้ (หรือใช้เครื่องอื่น) แล้วทำตาม README ตั้งแต่ `git clone` โดยใช้ `make clone` ไม่ใช้ `set-ws` (10/11/2026, Overdamp) → user `g1test` บน luke-mini ถึง `make doctor` 0 FAIL · ⏳ บน g1test ยังไม่ได้รัน `make smoke` หลังแก้, `make sim2sim`, Day 2 · เพิ่ม: DGX Spark (aarch64) ด้วย `set-ws` ถึง doctor 0 FAIL และ sim2sim ครบ 3 pane
+- [x] สร้าง user ใหม่บนเครื่องนี้ (หรือใช้เครื่องอื่น) แล้วทำตาม README ตั้งแต่ `git clone` โดยใช้ `make clone` ไม่ใช้ `set-ws` (10/11/2026, Overdamp) → user `g1test` บนเครื่องผู้ดูแล ถึง `make doctor` 0 FAIL · ⏳ บน g1test ยังไม่ได้รัน `make smoke` หลังแก้, `make sim2sim`, Day 2 · เพิ่ม: DGX Spark (aarch64) ด้วย `set-ws` ถึง doctor 0 FAIL และ sim2sim ครบ 3 pane
 - [x] จดทุกจุดที่ติด เวลาที่ใช้ และคำสั่งที่ต้องเดาเอง (10/11/2026, Overdamp) → `tests/fresh_machine/README.md` หัวข้อ "ผลที่ทดสอบแล้ว" และ `docs/pitfalls.md` · ไม่ได้จับเวลารวม (ทดสอบแบบเร็ว ไม่ได้ทำตามคู่มือทีละตัวอักษร)
 - [x] แก้ `envs/*.yml` ถ้าสร้างไม่ผ่าน (เช่น torch / CUDA ไม่ตรง) (10/11/2026, Overdamp) → เพิ่ม `scipy`, `onnx`, `nodefaults` · `make_envs.sh` เลี่ยง ToS ของ Anaconda
 - [ ] แก้คู่มือตามจุดที่ติดทั้งหมด แล้วทำซ้ำจนผ่านรวด · แก้ kit ครบทุกจุดที่เจอแล้ว แต่**ยังไม่ได้ทำซ้ำตั้งแต่ต้นแบบผ่านรวด** (รอบสอง)
@@ -128,10 +128,10 @@
 - [x] ~~`make models`~~ → `make clone` ได้ไฟล์มาแล้ว และ `make doctor` เทียบ sha256 กับ `models.sha256` (10/11/2026, Overdamp) · ถ้าวันหนึ่ง policy ใหญ่เกินจะเก็บใน git ค่อยกลับมาทำ Release
 
 ### Phase 8: กันของพังระยะยาว (1 วัน)
-- [ ] GitHub Actions (CPU): `bash -n` ทุกสคริปต์, shellcheck, `make help`, ตรวจตาราง make_targets, ตรวจลิงก์ใน docs
-- [ ] ขั้นตอนการเปลี่ยน commit ใน `repos.lock`: แตก branch → `make smoke` → อัปเดต `CHANGELOG.md` → PR
-- [ ] `CHANGELOG.md` และ tag เวอร์ชันของ kit (v0.1, v0.2, ...)
-- [ ] `CONTRIBUTING.md`: วิธีเพิ่ม target, วิธีเพิ่ม pitfall, กฎห้ามใส่ความลับ
+- [x] GitHub Actions (CPU): `bash -n` ทุกสคริปต์, shellcheck, `make help`, ตรวจตาราง make_targets, ตรวจลิงก์ใน docs (11/11/2026, Overdamp) → `.github/workflows/check.yml` รัน `make help` + `make check` · `make check` ตรวจเพิ่ม: ลิงก์ใน docs (`tests/check_links.py`), token / path เฉพาะเครื่อง, shellcheck · ⏳ ยังไม่เห็น workflow รันจริงบน GitHub จนกว่าจะ push
+- [x] ขั้นตอนการเปลี่ยน commit ใน `repos.lock`: แตก branch → `make smoke` → อัปเดต `CHANGELOG.md` → PR (11/11/2026, Overdamp) → `CONTRIBUTING.md` หัวข้อ "เปลี่ยน commit ใน repos.lock"
+- [ ] `CHANGELOG.md` และ tag เวอร์ชันของ kit (v0.1, v0.2, ...) · `CHANGELOG.md` มีแล้ว (รุ่น v0.1) · **ยังไม่ได้สร้าง tag `v0.1`** รอผู้ดูแลสั่ง
+- [x] `CONTRIBUTING.md`: วิธีเพิ่ม target, วิธีเพิ่ม pitfall, กฎห้ามใส่ความลับ (11/11/2026, Overdamp)
 
 ### Phase 9: ส่งมอบ
 - [ ] ประชุมส่งมอบ 1 ชั่วโมง: demo Day 1 สด + ตอบคำถาม

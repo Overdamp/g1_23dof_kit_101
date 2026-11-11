@@ -71,4 +71,5 @@ g1_23dof_kit/
 ## กติกาของ repo
 - ห้ามใส่รหัสผ่านหรือ token ในไฟล์ใดๆ ใช้ `.env` (อยู่ใน `.gitignore`)
 - จะเปลี่ยน commit ใน `repos.lock` ต้องรัน `make smoke` ผ่านก่อน
-- ไฟล์ `.pt` / `.onnx` ใหญ่ ไม่เก็บใน git ให้แนบ GitHub Release
+- policy อ้างอิง `v0` อยู่ใน repo `unitree_rl_mjlab` และมี sha256 ใน `models.sha256` · checkpoint จากการเทรน (`logs/`) ไม่เก็บใน git
+- ก่อน commit รัน `make check` · วิธีเพิ่ม target, pitfall, เปลี่ยน `repos.lock` และออกรุ่น อยู่ใน [CONTRIBUTING.md](CONTRIBUTING.md) · ประวัติการแก้อยู่ใน [CHANGELOG.md](CHANGELOG.md)

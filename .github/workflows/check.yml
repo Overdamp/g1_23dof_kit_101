@@ -1,0 +1,17 @@
+# Runs the same static checks as `make check` on every push and pull request.
+# No GPU, conda or robot repos needed. What it checks: tests/check_kit.sh.
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck version (preinstalled on the runner)
+        run: shellcheck --version
+      - name: make help lists every target
+        run: make help
+      - name: make check
+        run: make check

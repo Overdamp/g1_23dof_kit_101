@@ -81,7 +81,7 @@ make -n <target>          # เช่น make -n sim2sim POLICY=v0
 
 | target | ทำอะไร | คำสั่งจริง | ไฟล์ที่ทำงานจริง |
 |---|---|---|---|
-| `check` | ตรวจแบบไม่ใช้ GPU: syntax สคริปต์, กฎของ Makefile, ตารางนี้ครบ | `bash KIT/tests/check_kit.sh` | `KIT/tests/check_kit.sh` |
+| `check` | ตรวจแบบไม่ใช้ GPU: syntax สคริปต์ (+ shellcheck ถ้ามี), กฎของ Makefile, ตารางนี้ครบ, ลิงก์ใน docs, token และ path เฉพาะเครื่อง | `bash KIT/tests/check_kit.sh` | `KIT/tests/check_kit.sh` |
 | `smoke` | `check` + เทรน 3 iteration + `vel_eval` ของ v0 | `bash KIT/tests/smoke.sh` | `KIT/tests/smoke.sh` |
 | `docker-build` | build image (ร่าง ยังไม่ทดสอบ) | `docker compose -f KIT/docker/compose.yaml build` | `KIT/docker/Dockerfile` |
 | `docker-shell` | เข้า shell ใน container | `xhost +local:` → `docker compose -f KIT/docker/compose.yaml run --rm dev` | `KIT/docker/compose.yaml` |
