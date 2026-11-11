@@ -47,6 +47,7 @@ alias g1k='make -C ~/nvidia/unitree/g1_23dof_kit'   # แก้ path ให้�
 g1_23dof_kit/
 ├── Makefile            ← ทางเข้าทางเดียว: make <target>
 ├── repos.lock          ← repo + commit ที่ทดสอบแล้วว่าใช้ด้วยกันได้
+├── models.sha256       ← sha256 ของ policy อ้างอิง v0 (make doctor ตรวจให้)
 ├── envs/               ← conda env (ล็อกเวอร์ชัน)
 ├── scripts/            ← doctor.sh, clone_repos.sh, make_envs.sh
 ├── tests/smoke.sh      ← ทดสอบเร็วตั้งแต่ต้นจนจบ

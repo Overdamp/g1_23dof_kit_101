@@ -101,6 +101,12 @@ for p in "$RL"/deploy/robots/g1_23dof/config/policy/velocity/*/; do
   [ -f "$p/exported/policy.onnx" ] && [ -f "$p/params/deploy.yaml" ] && pass "policy $(basename "$p")" \
     || warn "policy $(basename "$p") lacks exported/policy.onnx or params/deploy.yaml"
 done
+# The reference policy must be the tested one (a retrained or edited v0 walks differently).
+if [ -f "$KIT/models.sha256" ] && [ -d "$RL" ]; then
+  bad=$(cd "$RL" && grep -v '^#' "$KIT/models.sha256" | sha256sum -c --quiet 2>&1 | grep -v '^sha256sum: WARNING' | head -3)
+  [ -z "$bad" ] && pass "reference policy v0 matches models.sha256" \
+    || { warn "reference policy differs from models.sha256: $(echo "$bad" | tr '\n' ' ')"; hint "git -C $RL status; expected if you replaced v0 on purpose"; }
+fi
 if [ -f "$RL/simulate/config.yaml" ]; then
   grep -Eq '^domain_id:\s*1' "$RL/simulate/config.yaml" && pass "sim config: domain_id 1" \
     || fail "simulate/config.yaml domain_id is not 1 (0 = the real robot's domain)"

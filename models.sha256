@@ -1,0 +1,8 @@
+# Reference policy for newcomers: v0 = Phase 3b (model 15998/16000), the one deployed.
+# The files live in the unitree_rl_mjlab repo (11 MB, pinned by repos.lock), so
+# `make clone` already delivers them; there is no separate download.
+# `make doctor` compares them with this list (paths are relative to unitree_rl_mjlab).
+# Update with: cd <WS>/unitree_rl_mjlab && sha256sum <the paths below>
+0f5626ee204ed51b9b1f83b4e2937814e28cbe5f39489ee991983016609abed5  deploy/robots/g1_23dof/config/policy/velocity/v0/exported/policy.onnx
+6ce7557e983eaebfc91d62faf7a38f78b13ee1cacc9202bd94f0fef4965d04ae  deploy/robots/g1_23dof/config/policy/velocity/v0/params/deploy.yaml
+70848b06270ebf46e5ab788df70fd3c8e41cabbea4672c45b789e886efb77ea1  deploy/robots/g1_23dof/config/policy/velocity/v0/checkpoints/model_phase3b_15998.pt
